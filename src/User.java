@@ -7,27 +7,19 @@ public abstract class User {
     String name;
     String login;
     String password;
-    boolean authenticated;
 
     public User(String id, String name, String login, String password) {
         this.name = name;
         this.login = login;
         this.password = hashPassword(password);
-        this.authenticated = false;
     }
 
     boolean login(String password) {
-        if (!authenticated) {
-            if (Objects.equals(this.password, hashPassword(password))) {
-                authenticated = true;
-                return true;
-            } else {
-                System.out.println("Niepoprawne dane logowania");
-                return false;
-            }
-        } else {
-            System.out.println("Błąd: Użytkownik jest już zalogowany.");
+        if (Objects.equals(this.password, hashPassword(password))) {
             return true;
+        } else {
+            System.out.println("Niepoprawne dane logowania");
+            return false;
         }
     }
 
