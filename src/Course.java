@@ -6,8 +6,7 @@ public class Course {
     private String description;
     private Teacher teacher;
     private List<Student> enrolledStudents = new ArrayList<>();
-
-    List<File> listOfFiles = new ArrayList<>();
+    private List<File> listOfFiles = new ArrayList<>();
 
     public Course(String name, String description, Teacher teacher) {
         this.name = name;
@@ -24,7 +23,20 @@ public class Course {
     public String getName() {
         return name;
     }
+
+    public String getDescription() {
+        return description;
+    }
+
     public Teacher getTeacher() {
         return teacher;
+    }
+
+    public List<Student> getEnrolledStudents() {
+        return enrolledStudents;
+    }
+
+    public List<File> getListOfFiles() {
+        return listOfFiles;
     }
 }

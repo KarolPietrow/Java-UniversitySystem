@@ -15,6 +15,10 @@ public class University {
         teachers.add(teacher);
     }
 
+    public void addCourse(Course course) {
+        courses.add(course);
+    }
+
     public List<Course> getAllCourses() {
         return courses;
     }

@@ -1,4 +1,3 @@
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,13 +9,14 @@ public class Student extends User {
    }
 
    public void enroll(Course course) {
-
-   }
-
-   public void viewEnrolledCourses() {
-       if (enrolledCourses.isEmpty()) {
-           System.out.println("Nie jesteś zapisany/a na żaden przedmiot.");
+       if (!this.enrolledCourses.contains(course)) {
+           course.addStudent(this);
+           this.enrolledCourses.add(course);
+           System.out.println("Pomyślnie zapisano na przedmiot!");
        }
    }
 
+   public List<Course> getEnrolledCourses() {
+       return enrolledCourses;
+   }
 }
