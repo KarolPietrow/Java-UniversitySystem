@@ -115,7 +115,7 @@ public class Main {
                 if (!notEnrolled.isEmpty()) {
                     System.out.println("----- DOSTĘPNE PRZEDMIOTY -----");
                     notEnrolled.forEach( c ->
-                            System.out.println(notEnrolled.indexOf(c)+1 + ". " + c.getName() + " - " + c.getDescription())
+                            System.out.println(notEnrolled.indexOf(c)+1 + ". " + c.getTeacher().getName() + " - " + c.getName() + " - " + c.getDescription())
                     );
                     System.out.println("---------------");
                     System.out.println("Wpisz numer przedmiotu, na który chcesz się zapisać, lub 0, aby wyjść.");
