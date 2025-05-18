@@ -89,7 +89,7 @@ public class Main {
         int choice = Integer.parseInt(sc.nextLine());
         switch (choice) {
             case 1 -> {
-                List<Course> courses = student.getEnrolledCourses();
+                List<Course> courses = university.getCoursesByStudent(student);
                 if (!courses.isEmpty()) {
                     System.out.println("TWOJE PRZEDMIOTY: ");
                     for (int i = 0; i < courses.size(); i++) {
@@ -114,7 +114,7 @@ public class Main {
                 List<Course> all = university.getAllCourses();
                 List<Course> notEnrolled = new ArrayList<>();
                 for (Course c : all) {
-                    if (!student.getEnrolledCourses().contains(c)) {
+                    if (!university.getCoursesByStudent(student).contains(c)) {
                         notEnrolled.add(c);
                     }
                 }
@@ -155,7 +155,7 @@ public class Main {
         System.out.println("N - nie");
         String choice = sc.nextLine().trim();
         if (choice.equalsIgnoreCase("Y")) {
-            student.addToCourse(course);
+            course.addStudent(student);
         }
     }
 
@@ -165,7 +165,7 @@ public class Main {
         System.out.println("N - nie");
         String choice = sc.nextLine().trim();
         if (choice.equalsIgnoreCase("Y")) {
-            student.removeFromCourse(course);
+            course.removeStudent(student);
         }
         System.out.println("Wypisano z przedmiotu.");
     }
@@ -293,6 +293,8 @@ public class Main {
         System.out.println("2. Dodaj studenta");
         System.out.println("3. Wyświetl listę materiałów");
         System.out.println("4. Dodaj materiał");
+        System.out.println("5. Usuń przedmiot");
+        System.out.println("0. Powrót");
 
         int choice = Integer.parseInt(sc.nextLine());
         switch (choice) {
@@ -312,7 +314,7 @@ public class Main {
                 if (choice2 != 0) {
                     Student student = university.getStudentById(String.valueOf(choice2));
                     if (student != null) {
-                        student.addToCourse(course);
+                        course.addStudent(student);
                         System.out.println(student.getName() + " został dodany do przedmiotu");
                     } else {
                         System.out.println("Niepoprawne ID studenta.");
@@ -336,8 +338,28 @@ public class Main {
                 }
                 break;
             }
+            case 5 -> {
+                System.out.println("----- UWAGA !!! -----");
+                System.out.print("Czy na pewno chcesz USUNĄĆ cały przedmiot \""
+                        + course.getName() + "\"? Tej czynności NIE MOŻNA cofnąć! (Y/N): ");
+                String conf = sc.nextLine().trim();
+                if (conf.equalsIgnoreCase("Y")) {
+                    boolean removed = university.removeCourse(course);
+                    if (removed) {
+                        System.out.println("Przedmiot usunięty pomyślnie.");
+                    } else {
+                        System.out.println("Błąd: nie udało się usunąć przedmiotu.");
+                    }
+                    return;
+                } else {
+                    System.out.println("Anulowano usuwanie przedmiotu.");
+                }
+            }
+            case 0 -> {
+                return;
+            }
             default -> {
-                break;
+                System.out.println("Nieprawidłowy wybór.");
             }
         }
     }

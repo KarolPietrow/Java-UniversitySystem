@@ -20,6 +20,9 @@ public class University {
     }
 
     public boolean removeCourse(Course course) {
+        for (Student s : new ArrayList<>(course.getEnrolledStudents())) {
+            course.removeStudent(s);
+        }
         return courses.remove(course);
     }
 
@@ -30,6 +33,12 @@ public class University {
     public List<Course> getCoursesByTeacher(Teacher teacher) {
         return courses.stream()
                 .filter(c -> c.getTeacher().equals(teacher))
+                .toList();
+    }
+
+    public List<Course> getCoursesByStudent(Student student) {
+        return courses.stream()
+                .filter(c -> c.getEnrolledStudents().contains(student))
                 .toList();
     }
 
