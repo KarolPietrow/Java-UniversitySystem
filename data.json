@@ -1,0 +1,62 @@
+{
+  "students": [
+    {
+      "id": "144501",
+      "name": "Andrzej Kowalski",
+      "login": "144501@edu.pl",
+      "password": "65e84be33532fb784c48129675f9eff3a682b27168c0ea744b2cf58ee02337c5"
+    }
+  ],
+  "teachers": [
+    {
+      "id": "15",
+      "name": "Jan Nowak",
+      "login": "jan.nowak@edu.pl",
+      "password": "a15f8ae07675bfb96e084bfb4f52fb2c22091061aae86e0eb76a55f4e52dd74e"
+    },
+    {
+      "id": "16",
+      "name": "Stanisław Wiśniewski",
+      "login": "staniwslaw.wisniewski@edu.pl",
+      "password": "b712e1cb406fbf80c3a6ef21e78d25c2d719a1b90e24c58b4254293077ac002f"
+    }
+  ],
+  "courses": [
+    {
+      "name": "Programowanie obiektowe 2025",
+      "description": "Nauka OOP w języku Java",
+      "teacher": {
+        "id": "15",
+        "name": "Jan Nowak",
+        "login": "jan.nowak@edu.pl",
+        "password": "a15f8ae07675bfb96e084bfb4f52fb2c22091061aae86e0eb76a55f4e52dd74e"
+      },
+      "enrolledStudents": [
+        {
+          "id": "144501",
+          "name": "Andrzej Kowalski",
+          "login": "144501@edu.pl",
+          "password": "65e84be33532fb784c48129675f9eff3a682b27168c0ea744b2cf58ee02337c5"
+        }
+      ],
+      "materials": [
+        {
+          "title": "PDF z wykładu",
+          "filePath": "materials/LB9.pdf"
+        }
+      ]
+    },
+    {
+      "name": "ASyKo25",
+      "description": "Architektury Systemów Komputerowych 2025",
+      "teacher": {
+        "id": "16",
+        "name": "Stanisław Wiśniewski",
+        "login": "staniwslaw.wisniewski@edu.pl",
+        "password": "b712e1cb406fbf80c3a6ef21e78d25c2d719a1b90e24c58b4254293077ac002f"
+      },
+      "enrolledStudents": [],
+      "materials": []
+    }
+  ]
+}
