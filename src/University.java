@@ -29,9 +29,18 @@ public class University {
                 .toList();
     }
 
+    public Student getStudentById(String id) {
+        for (Student student : students) {
+            if (Objects.equals(student.getId(), id)) {
+                return student;
+            }
+        }
+        return null;
+    }
+
     public Student getStudentByLogin(String login) {
         for (Student student : students) {
-            if (Objects.equals(student.login, login)) {
+            if (Objects.equals(student.getLogin(), login)) {
                 return student;
             }
         }

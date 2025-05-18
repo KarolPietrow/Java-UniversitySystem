@@ -8,7 +8,7 @@ public class Student extends User {
        super(id, name, login, password);
    }
 
-   public void enroll(Course course) {
+   public void addToCourse(Course course) {
        if (!this.enrolledCourses.contains(course)) {
            course.addStudent(this);
            this.enrolledCourses.add(course);
@@ -16,7 +16,22 @@ public class Student extends User {
        }
    }
 
+   public void removeFromCourse(Course course) {
+       if (this.enrolledCourses.contains(course)) {
+           course.removeStudent(this);
+           this.enrolledCourses.remove(course);
+           System.out.println("Pomyślnie wypisano się z przedmiotu.");
+       }
+   }
+
    public List<Course> getEnrolledCourses() {
        return enrolledCourses;
+   }
+
+   public String getLogin() {
+       return login;
+   }
+   public String getId() {
+       return id;
    }
 }

@@ -96,11 +96,11 @@ public class Main {
                     int choice2 = Integer.parseInt(sc.nextLine());
                     if (choice2 == 0) {
                         return true;
-                    } else {
-//                        studentCourseMenu(sc, university, courses.get(choice2-1));
+                    } else if (choice2 <= courses.size()) {
+                        studentCourseMenu(sc, university, student, courses.get(choice2-1));
                     }
                 } else {
-                    System.out.println("Nie zarządzasz żadnymi przedimotami.");
+                    System.out.println("Nie jesteś zapisany na żaden przedmiot.");
                 }
                 return true;
             }
@@ -122,8 +122,8 @@ public class Main {
                     int choice2 = Integer.parseInt(sc.nextLine());
                     if (choice2 == 0) {
                         return true;
-                    } else {
-                        enrollCourseMenu(sc, university, student, notEnrolled.get(choice2-1));
+                    } else if (choice2 <= notEnrolled.size()) {
+                        studentAddToCourseMenu(sc, university, student, notEnrolled.get(choice2-1));
                     }
                 } else {
                     System.out.println("Brak dostępnych przedmiotów do zapisania.");
@@ -141,16 +141,57 @@ public class Main {
         }
     }
 
-    static void enrollCourseMenu(Scanner sc, University university, Student student, Course course) {
+    static void studentAddToCourseMenu(Scanner sc, University university, Student student, Course course) {
         System.out.println("----- UWAGA -----");
         System.out.println("Czy na pewno chcesz zapisać się na przedmiot " + course.getName() + "?");
         System.out.println("Y - tak");
         System.out.println("N - nie");
         String choice = sc.nextLine().trim();
         if (choice.equalsIgnoreCase("Y")) {
-            student.enroll(course);
+            student.addToCourse(course);
         }
     }
+
+    static void studentRemoveFromCourseMenu(Scanner sc, University university, Student student, Course course) {
+        System.out.println("Czy na pewno chcesz wypisać się z przedmiotu " + course.getName() + "? Nie będziesz miał dostępu do materiałów do czasu ponownego zapisu.");
+        System.out.println("Y - tak");
+        System.out.println("N - nie");
+        String choice = sc.nextLine().trim();
+        if (choice.equalsIgnoreCase("Y")) {
+            student.removeFromCourse(course);
+        }
+        System.out.println("Wypisano z przedmiotu.");
+    }
+
+    static void studentCourseMenu(Scanner sc, University university, Student student, Course course) {
+        System.out.println("----- SZCZEGÓŁY PRZEDMIOTU -----");
+        System.out.println("Nazwa: " + course.getName());
+        System.out.println("Opis: " + course.getDescription());
+        System.out.println("Wykładowca: " + course.getTeacher().getName());
+        System.out.println("Liczba zapisanych studentów: " + course.getEnrolledStudents().toArray().length);
+        System.out.println("Lista dodanych materiałów: " + course.getListOfFiles().toArray().length);
+        System.out.println("---------------");
+        System.out.println("1. Wyświetl listę materiałów");
+        System.out.println("2. Wypisz się z przedmiotu");
+        System.out.println("3. Powrót");
+
+        int choice = Integer.parseInt(sc.nextLine());
+        switch (choice) {
+            case 1 -> {
+                // TODO
+            }
+            case 2 -> {
+                studentRemoveFromCourseMenu(sc, university, student, course);
+            }
+            case 3 -> {
+                break;
+            }
+            default -> {
+                break;
+            }
+        }
+    }
+
 
     static boolean teacherMenu(Scanner sc, University university, Teacher teacher) {
         System.out.println("----- MENU WYKŁADOWCY -----");
@@ -181,7 +222,7 @@ public class Main {
                     int choice2 = Integer.parseInt(sc.nextLine());
                     if (choice2 == 0) {
                         return true;
-                    } else {
+                    } else if (choice2 <= courses.size()) {
                         teacherCourseMenu(sc, university, courses.get(choice2-1));
                     }
                 } else {
@@ -209,17 +250,35 @@ public class Main {
         System.out.println("Lista dodanych materiałów: " + course.getListOfFiles().toArray().length);
         System.out.println("---------------");
         System.out.println("1. Wyświetl listę zapisanych studentów");
-        System.out.println("2. Wyświetl listę materiałów");
+        System.out.println("2. Dodaj studenta");
+        System.out.println("3. Wyświetl listę materiałów");
 
         int choice = Integer.parseInt(sc.nextLine());
         switch (choice) {
             case 1 -> {
                 List<Student> students = course.getEnrolledStudents();
-                for (int i = 0; i < students.toArray().length; i++) {
-                    System.out.println(i + ". " + students.get(i).getName());
+                if (!students.isEmpty()) {
+                    for (int i = 0; i < students.toArray().length; i++) {
+                        System.out.println(i + 1 + ". " + students.get(i).getName());
+                    }
+                } else {
+                    System.out.println("Brak studentów zapisanych na przedmiot");
                 }
             }
             case 2 -> {
+                System.out.println("Podaj ID studenta, którego chcesz dodać, lub 0 aby anulować:");
+                int choice2 = Integer.parseInt(sc.nextLine());
+                if (choice2 != 0) {
+                    Student student = university.getStudentById(String.valueOf(choice2));
+                    if (student != null) {
+                        student.addToCourse(course);
+                        System.out.println(student.getName() + " został dodany do przedmiotu");
+                    } else {
+                        System.out.println("Niepoprawne ID studenta.");
+                    }
+                }
+            }
+            case 3 -> {
                 // TODO
             }
             default -> {
