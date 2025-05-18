@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -11,6 +12,7 @@ public class Main {
         Teacher teacher1 = new Teacher("15", "Jan Nowak", "jan.nowak@edu.pl", "haslo123");
         Teacher teacher2 = new Teacher("16", "Stanisław Wiśniewski", "staniwslaw.wisniewski@edu.pl", "studia");
         university.addTeacher(teacher1);
+        university.addTeacher(teacher2);
 
         university.addStudent(new Student("144501", "Andrzej Kowalski", "144501@edu.pl", "qwerty"));
 //        university.addTeacher(new Teacher("15", "Jan Nowak", "jan.nowak@edu.pl", "haslo123"));
@@ -90,9 +92,11 @@ public class Main {
                 List<Course> courses = student.getEnrolledCourses();
                 if (!courses.isEmpty()) {
                     System.out.println("TWOJE PRZEDMIOTY: ");
-                    courses.forEach( c ->
-                            System.out.println(courses.indexOf(c)+1 + ". " + c.getTeacher().getName() + " - " + c.getName() + " - " + c.getDescription())
-                    );
+                    for (int i = 0; i < courses.size(); i++) {
+                        Course c = courses.get(i);
+                        System.out.println(i+1 + ". " + c.getTeacher().getName() + " - " + c.getName() + " - " + c.getDescription());
+
+                    }
                     System.out.println("---------------");
                     System.out.println("Wpisz numer przedmiotu, aby wyświetlić szczegóły, lub 0, aby wyjść.");
                     int choice2 = Integer.parseInt(sc.nextLine());
@@ -116,9 +120,10 @@ public class Main {
                 }
                 if (!notEnrolled.isEmpty()) {
                     System.out.println("----- DOSTĘPNE PRZEDMIOTY -----");
-                    notEnrolled.forEach( c ->
-                            System.out.println(notEnrolled.indexOf(c)+1 + ". " + c.getTeacher().getName() + " - " + c.getName() + " - " + c.getDescription())
-                    );
+                    for (int i = 0; i < notEnrolled.size(); i++) {
+                        Course c = notEnrolled.get(i);
+                        System.out.println(i+1 + ". " + c.getTeacher().getName() + " - " + c.getName() + " - " + c.getDescription());
+                    }
                     System.out.println("---------------");
                     System.out.println("Wpisz numer przedmiotu, na który chcesz się zapisać, lub 0, aby wyjść.");
                     int choice2 = Integer.parseInt(sc.nextLine());
@@ -171,7 +176,7 @@ public class Main {
         System.out.println("Opis: " + course.getDescription());
         System.out.println("Wykładowca: " + course.getTeacher().getName());
         System.out.println("Liczba zapisanych studentów: " + course.getEnrolledStudents().toArray().length);
-        System.out.println("Lista dodanych materiałów: " + course.getListOfFiles().toArray().length);
+        System.out.println("Lista dodanych materiałów: " + course.getMaterials().toArray().length);
         System.out.println("---------------");
         System.out.println("1. Wyświetl listę materiałów");
         System.out.println("2. Wypisz się z przedmiotu");
@@ -180,7 +185,7 @@ public class Main {
         int choice = Integer.parseInt(sc.nextLine());
         switch (choice) {
             case 1 -> {
-                // TODO
+                studentMaterialList(sc, course);
             }
             case 2 -> {
                 studentRemoveFromCourseMenu(sc, university, student, course);
@@ -194,6 +199,37 @@ public class Main {
         }
     }
 
+    static void studentMaterialList(Scanner sc, Course course) {
+        System.out.println("Materiały:");
+        List<Material> mats = course.getMaterials();
+        if (mats.isEmpty()) {
+            System.out.println("Brak materiałów.");
+        } else {
+            for (int i = 0; i < mats.size(); i++) {
+                System.out.printf("%d. %s%n", i+1, mats.get(i));
+            }
+            System.out.print("Wybierz numer materiału, by go wyświetlić/pobrać, lub 0, by wrócić: ");
+            int mChoice = Integer.parseInt(sc.nextLine());
+            if (mChoice > 0 && mChoice <= mats.size()) {
+                Material m = mats.get(mChoice - 1);
+                System.out.println("1. Podgląd (tylko .txt)");
+                System.out.println("2. Pobierz plik");
+                System.out.println("0. Powrót");
+                int action = Integer.parseInt(sc.nextLine());
+                switch (action) {
+                    case 1 -> m.displayContent();
+                    case 2 -> {
+                        System.out.print("Podaj katalog docelowy (np. downloads): ");
+                        String dir = sc.nextLine().trim();
+                        m.download(dir);
+                    }
+                    default -> {
+
+                    }
+                }
+            }
+        }
+    }
 
     static boolean teacherMenu(Scanner sc, University university, Teacher teacher) {
         System.out.println("----- MENU WYKŁADOWCY -----");
@@ -216,9 +252,11 @@ public class Main {
                 List<Course> courses = university.getCoursesByTeacher(teacher);
                 if (!courses.isEmpty()) {
                     System.out.println("TWOJE PRZEDMIOTY: ");
-                    courses.forEach( c ->
-                            System.out.println(courses.indexOf(c)+1 + ". " + c.getName() + " - " + c.getDescription())
-                    );
+                    for (int i = 0; i < courses.size(); i++) {
+                        Course c = courses.get(i);
+                        System.out.println(i+1 + ". " + c.getName() + " - " + c.getDescription());
+
+                    }
                     System.out.println("---------------");
                     System.out.println("Wpisz numer przedmiotu, aby wyświetlić szczegóły, lub 0, aby wyjść.");
                     int choice2 = Integer.parseInt(sc.nextLine());
@@ -249,11 +287,12 @@ public class Main {
         System.out.println("Opis: " + course.getDescription());
         System.out.println("Wykładowca: " + course.getTeacher().getName());
         System.out.println("Liczba zapisanych studentów: " + course.getEnrolledStudents().toArray().length);
-        System.out.println("Lista dodanych materiałów: " + course.getListOfFiles().toArray().length);
+        System.out.println("Lista dodanych materiałów: " + course.getMaterials().toArray().length);
         System.out.println("---------------");
         System.out.println("1. Wyświetl listę zapisanych studentów");
         System.out.println("2. Dodaj studenta");
         System.out.println("3. Wyświetl listę materiałów");
+        System.out.println("4. Dodaj materiał");
 
         int choice = Integer.parseInt(sc.nextLine());
         switch (choice) {
@@ -281,10 +320,60 @@ public class Main {
                 }
             }
             case 3 -> {
-                // TODO
+                teacherMaterialList(sc, course);
+            }
+            case 4 -> {
+                System.out.print("Podaj tytuł materiału:");
+                String title = sc.nextLine().trim();
+                System.out.print("Podaj pełną ścieżkę do pliku (.txt/.pdf):");
+                String source = sc.nextLine().trim();
+                try {
+                    Material m = new Material(title, source);
+                    course.addMaterial(m);
+                    System.out.println("Materiał dodany: " + m.getFilePath());
+                } catch (IOException e) {
+                    System.out.println("Nie udało się dodać materiału: " + e.getMessage());
+                }
+                break;
             }
             default -> {
                 break;
+            }
+        }
+    }
+
+    static void teacherMaterialList(Scanner sc, Course course) {
+        System.out.println("Materiały:");
+        List<Material> mats = course.getMaterials();
+        if (mats.isEmpty()) {
+            System.out.println("Brak materiałów.");
+        } else {
+            for (int i = 0; i < mats.size(); i++) {
+                System.out.printf("%d. %s%n", i+1, mats.get(i));
+            }
+            System.out.print("Wybierz numer materiału, by go wyświetlić/pobrać, lub 0, by wrócić: ");
+            int mChoice = Integer.parseInt(sc.nextLine());
+            if (mChoice > 0 && mChoice <= mats.size()) {
+                Material m = mats.get(mChoice - 1);
+                System.out.println("1. Podgląd (tylko .txt)");
+                System.out.println("2. Pobierz plik");
+                System.out.println("3. Usuń plik");
+                System.out.println("0. Powrót");
+                int action = Integer.parseInt(sc.nextLine());
+                switch (action) {
+                    case 1 -> m.displayContent();
+                    case 2 -> {
+                        System.out.print("Podaj katalog docelowy (np. downloads): ");
+                        String dir = sc.nextLine().trim();
+                        m.download(dir);
+                    }
+                    case 3 -> {
+
+                    }
+                    default -> {
+
+                    }
+                }
             }
         }
     }
