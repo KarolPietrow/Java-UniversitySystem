@@ -9,11 +9,13 @@ public class Main {
 
         // Utworzenie kont
         Teacher teacher1 = new Teacher("15", "Jan Nowak", "jan.nowak@edu.pl", "haslo123");
+        Teacher teacher2 = new Teacher("16", "Stanisław Wiśniewski", "staniwslaw.wisniewski@edu.pl", "studia");
         university.addTeacher(teacher1);
 
         university.addStudent(new Student("144501", "Andrzej Kowalski", "144501@edu.pl", "qwerty"));
 //        university.addTeacher(new Teacher("15", "Jan Nowak", "jan.nowak@edu.pl", "haslo123"));
-        university.addCourse(new Course("Inżynieria oprogramowania", "Przedmiot, na którym uczymy się obsługi StarUMLa", teacher1));
+        university.addCourse(new Course("Programowanie obiektowe 2025", "Nauka OOP w języku Java", teacher1));
+        university.addCourse(new Course("ASyKo25", "Architektury Systemów Komputerowych 2025", teacher2));
 
         while (true) {
             startMenu(sc, university);

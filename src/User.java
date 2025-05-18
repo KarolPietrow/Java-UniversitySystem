@@ -15,10 +15,6 @@ public abstract class User {
         this.password = hashPassword(password);
     }
 
-    public String getName() {
-        return name;
-    }
-
     boolean login(String password) {
         if (Objects.equals(this.password, hashPassword(password))) {
             return true;
@@ -40,5 +36,17 @@ public abstract class User {
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException("SHA-256 not supported", e);
         }
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public String getId() {
+        return id;
     }
 }
