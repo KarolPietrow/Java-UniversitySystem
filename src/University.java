@@ -19,6 +19,10 @@ public class University {
         courses.add(course);
     }
 
+    public boolean removeCourse(Course course) {
+        return courses.remove(course);
+    }
+
     public List<Course> getAllCourses() {
         return courses;
     }

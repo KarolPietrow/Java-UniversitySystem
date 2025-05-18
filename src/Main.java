@@ -368,7 +368,19 @@ public class Main {
                         m.download(dir);
                     }
                     case 3 -> {
-
+                        System.out.print("Czy na pewno chcesz usunąć materiał \""
+                                + m.getTitle() + "\"? Tej czynności NIE MOŻNA cofnąć! (Y/N):");
+                        String conf = sc.nextLine().trim();
+                        if (conf.equalsIgnoreCase("Y")) {
+                            if (m.delete()) {
+                                course.getMaterials().remove(m);
+                                System.out.println("Materiał usunięty pomyślnie.");
+                            } else {
+                                System.out.println("Nie udało się usunąć pliku: " + m.getFilePath());
+                            }
+                        } else {
+                            System.out.println("Anulowano usuwanie.");
+                        }
                     }
                     default -> {
 

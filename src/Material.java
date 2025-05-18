@@ -71,4 +71,14 @@ public class Material {
             System.out.println("Błąd pobierania pliku: " + e.getMessage());
         }
     }
+
+    public boolean delete() {
+        File f = new File(filePath);
+        boolean fileDeleted = true;
+        if (f.exists()) {
+            fileDeleted = f.delete();
+        }
+        return fileDeleted;
+    }
+
 }
