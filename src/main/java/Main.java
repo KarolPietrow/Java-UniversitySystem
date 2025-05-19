@@ -214,19 +214,37 @@ public class Main {
             int mChoice = Integer.parseInt(sc.nextLine());
             if (mChoice > 0 && mChoice <= mats.size()) {
                 Material m = mats.get(mChoice - 1);
-                System.out.println("1. Podgląd (tylko .txt)");
-                System.out.println("2. Pobierz plik");
-                System.out.println("0. Powrót");
-                int action = Integer.parseInt(sc.nextLine());
-                switch (action) {
-                    case 1 -> m.displayContent();
-                    case 2 -> {
+                if (m.getFilePath().startsWith("http://") || m.getFilePath().startsWith("https://")) {
+                    System.out.println("1. Otwórz link");
+                    System.out.println("0. Powrót");
+                    int action = Integer.parseInt(sc.nextLine());
+                    if (action == 1) {
+                        m.displayContent();
+                    }
+                } else if (m.getFilePath().toLowerCase().endsWith(".txt")) {
+                    System.out.println("1. Podgląd");
+                    System.out.println("2. Pobierz plik");
+                    System.out.println("0. Powrót");
+                    int action = Integer.parseInt(sc.nextLine());
+                    switch (action) {
+                        case 1 -> m.displayContent();
+                        case 2 -> {
+                            System.out.print("Podaj katalog docelowy (np. downloads): ");
+                            String dir = sc.nextLine().trim();
+                            m.download(dir);
+                        }
+                        default -> {
+
+                        }
+                    }
+                } else {
+                    System.out.println("1. Pobierz plik");
+                    System.out.println("0. Powrót");
+                    int action = Integer.parseInt(sc.nextLine());
+                    if (action == 1) {
                         System.out.print("Podaj katalog docelowy (np. downloads): ");
                         String dir = sc.nextLine().trim();
                         m.download(dir);
-                    }
-                    default -> {
-
                     }
                 }
             }
@@ -328,9 +346,9 @@ public class Main {
                 teacherMaterialList(sc, university, course);
             }
             case 4 -> {
-                System.out.print("Podaj tytuł materiału:");
+                System.out.print("Podaj tytuł materiału: ");
                 String title = sc.nextLine().trim();
-                System.out.print("Podaj pełną ścieżkę do pliku (.txt/.pdf):");
+                System.out.print("Podaj pełną ścieżkę do pliku (.txt/.pdf), lub link (https://):");
                 String source = sc.nextLine().trim();
                 try {
                     Material m = new Material(title, source);
@@ -382,36 +400,96 @@ public class Main {
             int mChoice = Integer.parseInt(sc.nextLine());
             if (mChoice > 0 && mChoice <= mats.size()) {
                 Material m = mats.get(mChoice - 1);
-                System.out.println("1. Podgląd (tylko .txt)");
-                System.out.println("2. Pobierz plik");
-                System.out.println("3. Usuń plik");
-                System.out.println("0. Powrót");
-                int action = Integer.parseInt(sc.nextLine());
-                switch (action) {
-                    case 1 -> m.displayContent();
-                    case 2 -> {
-                        System.out.print("Podaj katalog docelowy (pełna ścieżka): ");
-                        String dir = sc.nextLine().trim();
-                        m.download(dir);
-                    }
-                    case 3 -> {
-                        System.out.print("Czy na pewno chcesz usunąć materiał \""
-                                + m.getTitle() + "\"? Tej czynności NIE MOŻNA cofnąć! (Y/N):");
-                        String conf = sc.nextLine().trim();
-                        if (conf.equalsIgnoreCase("Y")) {
-                            if (m.delete()) {
-                                course.getMaterials().remove(m);
-                                System.out.println("Materiał usunięty pomyślnie.");
-                                StateManager.save(university);
+                if (m.getFilePath().startsWith("http://") || m.getFilePath().startsWith("https://")) {
+                    System.out.println("1. Otwórz link");
+                    System.out.println("2. Usuń linka");
+                    System.out.println("0. Powrót");
+                    int action = Integer.parseInt(sc.nextLine());
+                    switch (action) {
+                        case 1 -> m.displayContent();
+                        case 2 -> {
+                            System.out.print("Czy na pewno chcesz usunąć link \""
+                                    + m.getTitle() + "\"? Tej czynności NIE MOŻNA cofnąć! (Y/N):");
+                            String conf = sc.nextLine().trim();
+                            if (conf.equalsIgnoreCase("Y")) {
+                                if (m.delete()) {
+                                    course.getMaterials().remove(m);
+                                    System.out.println("Link usunięty pomyślnie.");
+                                    StateManager.save(university);
+                                } else {
+                                    System.out.println("Nie udało się usunąć linka: " + m.getFilePath());
+                                }
                             } else {
-                                System.out.println("Nie udało się usunąć pliku: " + m.getFilePath());
+                                System.out.println("Anulowano usuwanie.");
                             }
-                        } else {
-                            System.out.println("Anulowano usuwanie.");
+                        }
+                        default -> {
+
                         }
                     }
-                    default -> {
+                } else if (m.getFilePath().toLowerCase().endsWith(".txt")) {
+                    System.out.println("1. Podgląd");
+                    System.out.println("2. Pobierz plik");
+                    System.out.println("3. Usuń plik");
+                    System.out.println("0. Powrót");
+                    int action = Integer.parseInt(sc.nextLine());
+                    switch (action) {
+                        case 1 -> m.displayContent();
+                        case 2 -> {
+                            System.out.print("Podaj katalog docelowy (pełna ścieżka): ");
+                            String dir = sc.nextLine().trim();
+                            m.download(dir);
+                        }
+                        case 3 -> {
+                            System.out.print("Czy na pewno chcesz usunąć materiał \""
+                                    + m.getTitle() + "\"? Tej czynności NIE MOŻNA cofnąć! (Y/N):");
+                            String conf = sc.nextLine().trim();
+                            if (conf.equalsIgnoreCase("Y")) {
+                                if (m.delete()) {
+                                    course.getMaterials().remove(m);
+                                    System.out.println("Materiał usunięty pomyślnie.");
+                                    StateManager.save(university);
+                                } else {
+                                    System.out.println("Nie udało się usunąć pliku: " + m.getFilePath());
+                                }
+                            } else {
+                                System.out.println("Anulowano usuwanie.");
+                            }
+                        }
+                        default -> {
 
+                        }
+                    }
+                } else {
+                    System.out.println("1. Pobierz plik");
+                    System.out.println("2. Usuń plik");
+                    System.out.println("0. Powrót");
+                    int action = Integer.parseInt(sc.nextLine());
+                    switch (action) {
+                        case 1 -> {
+                            System.out.print("Podaj katalog docelowy (pełna ścieżka): ");
+                            String dir = sc.nextLine().trim();
+                            m.download(dir);
+                        }
+                        case 2 -> {
+                            System.out.print("Czy na pewno chcesz usunąć materiał \""
+                                    + m.getTitle() + "\"? Tej czynności NIE MOŻNA cofnąć! (Y/N):");
+                            String conf = sc.nextLine().trim();
+                            if (conf.equalsIgnoreCase("Y")) {
+                                if (m.delete()) {
+                                    course.getMaterials().remove(m);
+                                    System.out.println("Materiał usunięty pomyślnie.");
+                                    StateManager.save(university);
+                                } else {
+                                    System.out.println("Nie udało się usunąć pliku: " + m.getFilePath());
+                                }
+                            } else {
+                                System.out.println("Anulowano usuwanie.");
+                            }
+                        }
+                        default -> {
+
+                        }
                     }
                 }
             }

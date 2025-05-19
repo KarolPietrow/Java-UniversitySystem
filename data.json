@@ -43,6 +43,14 @@
         {
           "title": "PDF z wykładu",
           "filePath": "materials/LB9.pdf"
+        },
+        {
+          "title": "https://google.com",
+          "filePath": "https://google.com"
+        },
+        {
+          "title": "link do zooma",
+          "filePath": "http://www.example.com/gmail/seemeeting1?id\u003d05005051015051"
         }
       ]
     },
