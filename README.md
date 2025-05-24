@@ -1,3 +1,5 @@
+https://docs.google.com/document/d/1iua0-LiMHDiEVFqBhEIPaBEV4cNrEjC3Mg25GxC9l5M/edit?usp=sharing
+
 ## Fragment systemu wspomagającego funkcjonowanie studenta w uczelni
 
 Zgodnie z założeniami iteracyjnego procesu wytwórczego oprogramowania należy skonstruować system/program komputerowy (oprogramowanie) realizujący/e ww. dziedzinę problemu.
