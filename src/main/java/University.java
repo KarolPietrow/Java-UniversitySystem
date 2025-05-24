@@ -68,7 +68,7 @@ public class University {
 
     public Teacher getTeacherByLogin(String login) {
         for (Teacher teacher : teachers) {
-            if (Objects.equals(teacher.login, login)) {
+            if (Objects.equals(teacher.getLogin(), login)) {
                 return teacher;
             }
         }

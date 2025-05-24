@@ -3,10 +3,10 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Objects;
 
 public abstract class User {
-    String id;
-    String name;
-    String login;
-    String password;
+    private String id;
+    private String name;
+    private String login;
+    private String password;
 
     public User(String id, String name, String login, String password) {
         this.id = id;
