@@ -244,7 +244,7 @@ public class Main {
                     switch (action) {
                         case 1 -> m.displayContent();
                         case 2 -> {
-                            System.out.print("Podaj katalog docelowy (np. downloads): ");
+                            System.out.print("Podaj ścieżkę katalogu docelowego: ");
                             String dir = sc.nextLine().trim();
                             m.download(dir);
                         }
@@ -257,7 +257,7 @@ public class Main {
                     System.out.println("0. Powrót");
                     int action = getIntInput(sc);
                     if (action == 1) {
-                        System.out.print("Podaj katalog docelowy (np. downloads): ");
+                        System.out.print("Podaj ścieżkę katalogu docelowego: ");
                         String dir = sc.nextLine().trim();
                         m.download(dir);
                     }
