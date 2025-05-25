@@ -15,20 +15,26 @@ public class Material {
 
     public Material(String title, String source) throws IOException {
         this.title = title;
+        source = source.trim();
+        if ((source.startsWith("'") && source.endsWith("'")) ||
+                (source.startsWith("\"") && source.endsWith("\""))) {
+            source = source.substring(1, source.length() - 1).trim();
+        }
         if (source.startsWith("http://") || source.startsWith("https://")) { // Link
             this.filePath = source;
         } else { // Plik
-            File materialsDir = new File("materials");
-            if (!materialsDir.exists()) {
-                materialsDir.mkdirs();
+            Path materialsDir = Path.of("materials");
+            if (Files.notExists(materialsDir)) {
+                Files.createDirectories(materialsDir);
             }
-            File src = new File(source);
-            if (!src.exists()) {
-                throw new IOException("Plik źródłowy nie istnieje: " + source);
+            Path src = Path.of(source);
+            if (Files.notExists(src)) {
+                throw new IOException("Plik źródłowy nie istnieje: " + src.toAbsolutePath());
             }
-            File dest = new File(materialsDir, src.getName());
-            Files.copy(src.toPath(), dest.toPath(), StandardCopyOption.REPLACE_EXISTING);
-            this.filePath = dest.getPath();
+            Path dest = materialsDir.resolve(src.getFileName());
+            Files.copy(src, dest, StandardCopyOption.REPLACE_EXISTING);
+            this.filePath = dest.toAbsolutePath().toString();
+            System.out.println("Skopiowano plik do: " + this.filePath);
         }
     }
 
@@ -82,20 +88,29 @@ public class Material {
             System.out.println("Linków nie można pobrać");
             return;
         } else {
-            File src = new File(filePath);
-            if (!src.exists()) {
+            String dir = targetDir.trim();
+            if ((dir.startsWith("'") && dir.endsWith("'")) ||
+                    (dir.startsWith("\"") && dir.endsWith("\""))) {
+                dir = dir.substring(1, dir.length() - 1).trim();
+            }
+
+            Path src = Path.of(filePath);
+            if (Files.notExists(src)) {
                 System.out.println("Plik źródłowy nie istnieje: " + filePath);
                 return;
             }
-            File dir = new File(targetDir);
-            if (!dir.exists() && !dir.mkdirs()) {
-                System.out.println("Nie udało się utworzyć katalogu docelowego: " + targetDir);
+            Path destDir = Path.of(dir);
+            try {
+                Files.createDirectories(destDir);
+            } catch (IOException e) {
+                System.out.println("Nie udało się utworzyć katalogu docelowego: " + destDir.toAbsolutePath());
                 return;
             }
-            File dest = new File(dir, src.getName());
+
+            Path dest = destDir.resolve(src.getFileName());
             try {
-                Files.copy(Path.of(src.getPath()), Path.of(dest.getPath()), StandardCopyOption.REPLACE_EXISTING);
-                System.out.println("Pobrano plik do: " + dest.getAbsolutePath());
+                Files.copy(src, dest, StandardCopyOption.REPLACE_EXISTING);
+                System.out.println("Pobrano plik do: " + dest.toAbsolutePath());
             } catch (IOException e) {
                 System.out.println("Błąd pobierania pliku: " + e.getMessage());
             }

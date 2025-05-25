@@ -9,14 +9,16 @@ public class Main {
         University university = StateManager.load();
 
 //        Utworzenie kont
-//        Teacher teacher1 = new Teacher("15", "Jan Nowak", "jan.nowak@edu.pl", "haslo123");
+        Teacher teacher1 = new Teacher("17", "Ewelina Kowalczyk", "ewelina.kowalczyk@edu.pl", "haslo123");
 //        Teacher teacher2 = new Teacher("16", "Stanisław Wiśniewski", "staniwslaw.wisniewski@edu.pl", "studia");
-//        university.addTeacher(teacher1);
+        university.addTeacher(teacher1);
 //        university.addTeacher(teacher2);
 //
-//        university.addStudent(new Student("144501", "Andrzej Kowalski", "144501@edu.pl", "qwerty"));
+//        university.addStudent(new Student("144503", "Marta Zielińska", "144503@edu.pl", "qwerty2"));
 //        university.addCourse(new Course("Programowanie obiektowe 2025", "Nauka OOP w języku Java", teacher1));
 //        university.addCourse(new Course("ASyKo25", "Architektury Systemów Komputerowych 2025", teacher2));
+
+        StateManager.save(university);
 
         while (true) {
             startMenu(sc, university);
@@ -363,7 +365,7 @@ public class Main {
             case 4 -> {
                 System.out.print("Podaj tytuł materiału: ");
                 String title = sc.nextLine().trim();
-                System.out.print("Podaj pełną ścieżkę do pliku (.txt/.pdf), lub link (https://):");
+                System.out.print("Podaj pełną ścieżkę do pliku, lub link (https://):");
                 String source = sc.nextLine().trim();
                 try {
                     Material m = new Material(title, source);

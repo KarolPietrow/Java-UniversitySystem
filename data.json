@@ -73,6 +73,10 @@
         {
           "title": "Link do zooma",
           "filePath": "http://www.zoom.com/"
+        },
+        {
+          "title": "algosy",
+          "filePath": "/Users/karolpietrow/Documents/IdeaProjects/Java-UniversitySystem/materials/Algorytmy i struktury danych I.txt"
         }
       ]
     },
