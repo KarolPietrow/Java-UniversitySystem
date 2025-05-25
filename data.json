@@ -5,6 +5,18 @@
       "name": "Andrzej Kowalski",
       "login": "144501@edu.pl",
       "password": "65e84be33532fb784c48129675f9eff3a682b27168c0ea744b2cf58ee02337c5"
+    },
+    {
+      "id": "144502",
+      "name": "Aleksander Wójcik",
+      "login": "144502@edu.pl",
+      "password": "42ad28944380f770cf17432c3494c07c32f680173b42c3562888f096e738ef7a"
+    },
+    {
+      "id": "144503",
+      "name": "Marta Zielińska",
+      "login": "144503@edu.pl",
+      "password": "42ad28944380f770cf17432c3494c07c32f680173b42c3562888f096e738ef7a"
     }
   ],
   "teachers": [
@@ -17,11 +29,29 @@
     {
       "id": "16",
       "name": "Stanisław Wiśniewski",
-      "login": "staniwslaw.wisniewski@edu.pl",
+      "login": "stanislaw.wisniewski@edu.pl",
       "password": "b712e1cb406fbf80c3a6ef21e78d25c2d719a1b90e24c58b4254293077ac002f"
+    },
+    {
+      "id": "17",
+      "name": "Ewelina Kowalczyk",
+      "login": "ewelina.kowalczyk@edu.pl",
+      "password": "a15f8ae07675bfb96e084bfb4f52fb2c22091061aae86e0eb76a55f4e52dd74e"
     }
   ],
   "courses": [
+    {
+      "name": "Podstawy programowania 2024",
+      "description": "Nauka podstaw programowania w języku C++",
+      "teacher": {
+        "id": "15",
+        "name": "Jan Nowak",
+        "login": "jan.nowak@edu.pl",
+        "password": "a15f8ae07675bfb96e084bfb4f52fb2c22091061aae86e0eb76a55f4e52dd74e"
+      },
+      "enrolledStudents": [],
+      "materials": []
+    },
     {
       "name": "Programowanie obiektowe 2025",
       "description": "Nauka OOP w języku Java",
@@ -41,16 +71,8 @@
       ],
       "materials": [
         {
-          "title": "PDF z wykładu",
-          "filePath": "materials/LB9.pdf"
-        },
-        {
-          "title": "https://google.com",
-          "filePath": "https://google.com"
-        },
-        {
-          "title": "link do zooma",
-          "filePath": "http://www.example.com/gmail/seemeeting1?id\u003d05005051015051"
+          "title": "Link do zooma",
+          "filePath": "http://www.zoom.com/"
         }
       ]
     },
@@ -60,8 +82,32 @@
       "teacher": {
         "id": "16",
         "name": "Stanisław Wiśniewski",
-        "login": "staniwslaw.wisniewski@edu.pl",
+        "login": "stanislaw.wisniewski@edu.pl",
         "password": "b712e1cb406fbf80c3a6ef21e78d25c2d719a1b90e24c58b4254293077ac002f"
+      },
+      "enrolledStudents": [],
+      "materials": []
+    },
+    {
+      "name": "Systemy Wbudowane 2025",
+      "description": "Budowa i działanie systemów mikroprocesorowych",
+      "teacher": {
+        "id": "16",
+        "name": "Stanisław Wiśniewski",
+        "login": "stanislaw.wisniewski@edu.pl",
+        "password": "b712e1cb406fbf80c3a6ef21e78d25c2d719a1b90e24c58b4254293077ac002f"
+      },
+      "enrolledStudents": [],
+      "materials": []
+    },
+    {
+      "name": "Algorytmy i Struktury Danych 2025",
+      "description": "Tworzenie, analiza i implementacja algorytmów w języku C++",
+      "teacher": {
+        "id": "17",
+        "name": "Ewelina Kowalczyk",
+        "login": "ewelina.kowalczyk@edu.pl",
+        "password": "a15f8ae07675bfb96e084bfb4f52fb2c22091061aae86e0eb76a55f4e52dd74e"
       },
       "enrolledStudents": [],
       "materials": []
