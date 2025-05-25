@@ -23,12 +23,27 @@ public class Main {
         }
     }
 
+    private static int getIntInput(Scanner sc) {
+        int input;
+        while (true) {
+            try {
+                input = Integer.parseInt(sc.nextLine());
+                return input;
+            } catch (NumberFormatException e) {
+                System.out.println("Nieprawidłowy format. Proszę wprowadzić liczbę.");
+            }
+        }
+    }
+
+
     static void startMenu(Scanner sc, University university) {
         System.out.println("----- SYSTEM ZARZĄDZANIA STUDIAMI -----");
         System.out.println("1. Zaloguj się");
         System.out.println("2. Wyjdź");
 
-        int choice = Integer.parseInt(sc.nextLine());
+//        int choice = Integer.parseInt(sc.nextLine());
+        int choice = getIntInput(sc);
+
         switch (choice) {
             case 1 -> loginMenu(sc, university);
             case 2 -> {
@@ -85,7 +100,7 @@ public class Main {
         System.out.println("2. Przedmioty, na które możesz się zapisać");
         System.out.println("3. Wyloguj się");
 
-        int choice = Integer.parseInt(sc.nextLine());
+        int choice = getIntInput(sc);
         switch (choice) {
             case 1 -> {
                 List<Course> courses = university.getCoursesByStudent(student);
@@ -94,11 +109,10 @@ public class Main {
                     for (int i = 0; i < courses.size(); i++) {
                         Course c = courses.get(i);
                         System.out.println(i+1 + ". " + c.getTeacher().getName() + " - " + c.getName() + " - " + c.getDescription());
-
                     }
                     System.out.println("---------------");
                     System.out.println("Wpisz numer przedmiotu, aby wyświetlić szczegóły, lub 0, aby wyjść.");
-                    int choice2 = Integer.parseInt(sc.nextLine());
+                    int choice2 = getIntInput(sc);
                     if (choice2 == 0) {
                         return true;
                     } else if (choice2 <= courses.size()) {
@@ -125,7 +139,7 @@ public class Main {
                     }
                     System.out.println("---------------");
                     System.out.println("Wpisz numer przedmiotu, na który chcesz się zapisać, lub 0, aby wyjść.");
-                    int choice2 = Integer.parseInt(sc.nextLine());
+                    int choice2 = getIntInput(sc);
                     if (choice2 == 0) {
                         return true;
                     } else if (choice2 <= notEnrolled.size()) {
@@ -160,6 +174,7 @@ public class Main {
     }
 
     static void studentRemoveFromCourseMenu(Scanner sc, University university, Student student, Course course) {
+        System.out.println("----- UWAGA -----");
         System.out.println("Czy na pewno chcesz wypisać się z przedmiotu " + course.getName() + "? Nie będziesz miał dostępu do materiałów do czasu ponownego zapisu.");
         System.out.println("Y - tak");
         System.out.println("N - nie");
@@ -183,7 +198,7 @@ public class Main {
         System.out.println("2. Wypisz się z przedmiotu");
         System.out.println("3. Powrót");
 
-        int choice = Integer.parseInt(sc.nextLine());
+        int choice = getIntInput(sc);
         switch (choice) {
             case 1 -> {
                 studentMaterialList(sc, course);
@@ -211,13 +226,13 @@ public class Main {
                 System.out.printf("%d. %s%n", i+1, mats.get(i));
             }
             System.out.print("Wybierz numer materiału, by go wyświetlić/pobrać, lub 0, by wrócić: ");
-            int mChoice = Integer.parseInt(sc.nextLine());
+            int mChoice = getIntInput(sc);
             if (mChoice > 0 && mChoice <= mats.size()) {
                 Material m = mats.get(mChoice - 1);
                 if (m.getFilePath().startsWith("http://") || m.getFilePath().startsWith("https://")) {
                     System.out.println("1. Otwórz link");
                     System.out.println("0. Powrót");
-                    int action = Integer.parseInt(sc.nextLine());
+                    int action = getIntInput(sc);
                     if (action == 1) {
                         m.displayContent();
                     }
@@ -225,7 +240,7 @@ public class Main {
                     System.out.println("1. Podgląd");
                     System.out.println("2. Pobierz plik");
                     System.out.println("0. Powrót");
-                    int action = Integer.parseInt(sc.nextLine());
+                    int action = getIntInput(sc);
                     switch (action) {
                         case 1 -> m.displayContent();
                         case 2 -> {
@@ -240,7 +255,7 @@ public class Main {
                 } else {
                     System.out.println("1. Pobierz plik");
                     System.out.println("0. Powrót");
-                    int action = Integer.parseInt(sc.nextLine());
+                    int action = getIntInput(sc);
                     if (action == 1) {
                         System.out.print("Podaj katalog docelowy (np. downloads): ");
                         String dir = sc.nextLine().trim();
@@ -257,7 +272,7 @@ public class Main {
         System.out.println("2. Wyświetl swoje przedmioty");
         System.out.println("3. Wyloguj się");
 
-        int choice = Integer.parseInt(sc.nextLine());
+        int choice = getIntInput(sc);
         switch (choice) {
             case 1 -> {
                 System.out.println("Podaj nazwę przedmiotu:");
@@ -279,7 +294,7 @@ public class Main {
                     }
                     System.out.println("---------------");
                     System.out.println("Wpisz numer przedmiotu, aby wyświetlić szczegóły, lub 0, aby wyjść.");
-                    int choice2 = Integer.parseInt(sc.nextLine());
+                    int choice2 = getIntInput(sc);
                     if (choice2 == 0) {
                         return true;
                     } else if (choice2 <= courses.size()) {
@@ -316,7 +331,7 @@ public class Main {
         System.out.println("5. Usuń przedmiot");
         System.out.println("0. Powrót");
 
-        int choice = Integer.parseInt(sc.nextLine());
+        int choice = getIntInput(sc);
         switch (choice) {
             case 1 -> {
                 List<Student> students = course.getEnrolledStudents();
@@ -330,7 +345,7 @@ public class Main {
             }
             case 2 -> {
                 System.out.println("Podaj ID studenta, którego chcesz dodać, lub 0 aby anulować:");
-                int choice2 = Integer.parseInt(sc.nextLine());
+                int choice2 = getIntInput(sc);
                 if (choice2 != 0) {
                     Student student = university.getStudentById(String.valueOf(choice2));
                     if (student != null) {
@@ -397,14 +412,14 @@ public class Main {
                 System.out.printf("%d. %s%n", i+1, mats.get(i));
             }
             System.out.print("Wybierz numer materiału, by go wyświetlić/pobrać, lub 0, by wrócić: ");
-            int mChoice = Integer.parseInt(sc.nextLine());
+            int mChoice = getIntInput(sc);
             if (mChoice > 0 && mChoice <= mats.size()) {
                 Material m = mats.get(mChoice - 1);
                 if (m.getFilePath().startsWith("http://") || m.getFilePath().startsWith("https://")) {
                     System.out.println("1. Otwórz link");
                     System.out.println("2. Usuń linka");
                     System.out.println("0. Powrót");
-                    int action = Integer.parseInt(sc.nextLine());
+                    int action = getIntInput(sc);
                     switch (action) {
                         case 1 -> m.displayContent();
                         case 2 -> {
@@ -432,7 +447,7 @@ public class Main {
                     System.out.println("2. Pobierz plik");
                     System.out.println("3. Usuń plik");
                     System.out.println("0. Powrót");
-                    int action = Integer.parseInt(sc.nextLine());
+                    int action = getIntInput(sc);
                     switch (action) {
                         case 1 -> m.displayContent();
                         case 2 -> {
@@ -464,7 +479,7 @@ public class Main {
                     System.out.println("1. Pobierz plik");
                     System.out.println("2. Usuń plik");
                     System.out.println("0. Powrót");
-                    int action = Integer.parseInt(sc.nextLine());
+                    int action = getIntInput(sc);
                     switch (action) {
                         case 1 -> {
                             System.out.print("Podaj katalog docelowy (pełna ścieżka): ");
