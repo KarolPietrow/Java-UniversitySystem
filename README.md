@@ -1,8 +1,13 @@
-https://docs.google.com/document/d/1iua0-LiMHDiEVFqBhEIPaBEV4cNrEjC3Mg25GxC9l5M/edit?usp=sharing
+# Student Management System – Course Enrollment Module
 
-## Fragment systemu wspomagającego funkcjonowanie studenta w uczelni
+This project is a Java-based student management system focused on streamlining the course enrollment process at universities. It allows students to browse available courses, enroll and unenroll from them, and access learning materials uploaded by lecturers. Lecturers can add courses, manage enrolled students, upload files (such as lecture notes or assignments), and share links for online resources or video conferences.
+The system was designed with a clear requirements analysis and includes UML diagrams illustrating its architecture and processes. Unit tests were implemented using JUnit to ensure code reliability and correctness.
 
-Zgodnie z założeniami iteracyjnego procesu wytwórczego oprogramowania należy skonstruować system/program komputerowy (oprogramowanie) realizujący/e ww. dziedzinę problemu.
-Dokument projektowy (w formacie .pdf) powinien zawierać tytuł, imiona i nazwiska osób wykonujących zadanie, zwięzły opis dziedziny problemu oraz z podziałem na sekcje tożsame z fazami cyklu iteracyjnego odzwierciedlające główne elementy modelu, na podstawie których stworzono oprogramowanie.
-
-Czas trwania projektu: 4 tygodnie od dnia 29.04.2025.
+## Key features:
+- Browsing the university’s course offerings
+- Enrolling and unenrolling in courses
+- Uploading and managing learning materials (files and links) by lecturers
+- Viewing and downloading materials by students
+- UML diagrams for clear system design
+- Requirements analysis and structured implementatio
+- JUnit test coverage for core functionalities
